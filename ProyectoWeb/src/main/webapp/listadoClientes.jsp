@@ -9,7 +9,7 @@
   <%@ page import="java.util.List;">
 
 
-  <> </>
+
 
   <%!
     ClienteImpl clienteDao = new ClienteImpl();
@@ -35,16 +35,16 @@
            <%forEach(Cliente cli : listaClientes) { %>
              <! --
 
-           <c:forEach items="${listaClientes}" var="c">
-              <tr>
-                 <td><%=c.getId() %> </td>
-                 <td><%=c.getNombre() %> </td>
-                 <td><%=c.getApellido() %> </td>
-                 <td><%=c.getTelefono() %> </td>
-                 <td></td>
-                 <td></td>
-          <% }  %>
-           //</c:forEach>
+               <c:forEach items="${listaClientes}" var="c">
+                  <tr>
+                     <td><%=c.getId() %> </td>
+                     <td><%=c.getNombre() %> </td>
+                     <td><%=c.getApellido() %> </td>
+                     <td><%=c.getTelefono() %> </td>
+                     <td></td>
+                     <td></td>
+              <% }  %>
+               //</c:forEach>
 
              </tr>
 

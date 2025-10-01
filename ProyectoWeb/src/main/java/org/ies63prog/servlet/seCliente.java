@@ -19,9 +19,9 @@ public class seCliente extends HttpServlet {
     req.setAttribute("Mensaje","Hola desde el Servlet ProgI IES63!");
     req.setAttribute("Fecha", new Date());
     String operacion="nuevo";
-    String nombre="";
-    String apellido="";
-    String telefono="";
+    String nombre="Nombre";
+    String apellido="Apellido";
+    String telefono="telefono";
     int id=-1;
 
     nombre=req.getParameter("txtNombre");
@@ -38,5 +38,13 @@ public class seCliente extends HttpServlet {
     rd.forward(req,response);
 
   }
+
+  /* agregar en la bdd
+  INSERT INTO cliente (´nombre´, ´apellido´,´dni´, ´correo´, ´localidad´) VALUES
+('Abril', 'Gómez', '34214567', 'abg.gomez@example.com', 'Santa Fe'),
+('Lucas', 'Pérez', '29876543', 'lucas.perez@example.com', 'Reconquista'),
+('Donato', 'Grosso', '33456789', 'donna@example.com', 'Las Toscas'),
+('Mateo', 'Grosso', '31234567', 'mateog@example.com', 'San Antonio de Obl.'),
+('Luz', 'Gonzalez', '30567891', 'luzcat@example.com', 'Las Toscas');*/
 
 }
