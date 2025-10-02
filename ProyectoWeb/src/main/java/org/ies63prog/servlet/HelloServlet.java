@@ -1,4 +1,4 @@
-package org.ies63prog.servlet;
+package org.ies63.progI.servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,15 +12,13 @@ import java.util.Date;
 public class HelloServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-    req.setAttribute("Mensaje","Hola desde el Servlet ProgI IES63!");
-    req.setAttribute("Fecha", new Date());
+    req.setAttribute("mensaje", "¡Hola desde el Servlet ProgI IES63!");
+    req.setAttribute("fecha", new Date());
     RequestDispatcher rd = req.getRequestDispatcher("/hello.jsp");
-    rd.forward(req,response);
-
+    rd.forward(req, res);
   }
-
 
 
 }

@@ -1,12 +1,12 @@
-package org.ies63prog.servlet;
+package org.ies63.progI.servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.ies63prog.dao.ClienteImpl;
-import org.ies63prog.entities.Cliente;
+import org.ies63.progI.dao.ClienteImpl;
+import org.ies63.progI.entities.Cliente;
 
 import java.io.IOException;
 import java.util.Date;
@@ -14,37 +14,44 @@ import java.util.Date;
 public class seCliente extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
+  public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-    req.setAttribute("Mensaje","Hola desde el Servlet ProgI IES63!");
-    req.setAttribute("Fecha", new Date());
-    String operacion="nuevo";
-    String nombre="Nombre";
-    String apellido="Apellido";
-    String telefono="telefono";
-    int id=-1;
+    String operacion = "nuevo";
+    String nombre = "";
+    String apellido = "";
+    String telefono = "";
+    int id = -1;
+    operacion = req.getParameter("operacion");
 
-    nombre=req.getParameter("txtNombre");
-    nombre=req.getParameter("txtApellido");
-    nombre=req.getParameter("txtTelefono");
-    nombre=req.getParameter("operacion");
-    id=Integer.parseInt(req.getParameter("textId"));
+    if (operacion.equals("editar") || operacion.equals("nuevo")) {
+      nombre = req.getParameter("txtNombre");
+      apellido = req.getParameter("txtApellido");
+      telefono = req.getParameter("txtTelefono");
+      id = Integer.parseInt(req.getParameter("txtId"));
+    } else
+      id = Integer.parseInt(req.getParameter("id"));
 
-    Cliente clienteNuevo = new Cliente(id,nombre,apellido,telefono);
-    ClienteImpl clienteDao= new ClienteImpl();
-    clienteDao.insert(clienteNuevo);
 
-    RequestDispatcher rd = req.getRequestDispatcher("/hello.jsp");
-    rd.forward(req,response);
+    // para guardar el cliente
+    ClienteImpl clienteDAO = new ClienteImpl();
 
+    if (operacion.equals("nuevo")) {// es nuevo
+      Cliente clienteNuevo = new Cliente(id, nombre, apellido, telefono);
+      clienteDAO.insert(clienteNuevo);
+    }
+    if (operacion.equals("editar")) {// es editar
+      Cliente clienteEditar = clienteDAO.getById(id);
+      clienteEditar.setNombre(nombre);
+      clienteEditar.setApellido(apellido);
+      clienteEditar.setTelefono(telefono);
+      clienteDAO.update(clienteEditar);
+    }
+    if (operacion.equals( "eliminar")) {
+      clienteDAO.delete(id);
+    }
+
+    RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
+    rd.forward(req, res);
   }
-
-  /* agregar en la bdd
-  INSERT INTO cliente (´nombre´, ´apellido´,´dni´, ´correo´, ´localidad´) VALUES
-('Abril', 'Gómez', '34214567', 'abg.gomez@example.com', 'Santa Fe'),
-('Lucas', 'Pérez', '29876543', 'lucas.perez@example.com', 'Reconquista'),
-('Donato', 'Grosso', '33456789', 'donna@example.com', 'Las Toscas'),
-('Mateo', 'Grosso', '31234567', 'mateog@example.com', 'San Antonio de Obl.'),
-('Luz', 'Gonzalez', '30567891', 'luzcat@example.com', 'Las Toscas');*/
 
 }
