@@ -27,8 +27,8 @@ public class AutoImpl implements DAO<Auto, Integer> , AdmConexion{
 
   @Override
   public List<Auto> getAll() {
-    List<Auto> lista = new ArrayList<>();
-    return lista;
+    List<Auto>listaAuto = new ArrayList<>();
+    return listaAuto;
   }
 
    @Override
@@ -164,6 +164,12 @@ public class AutoImpl implements DAO<Auto, Integer> , AdmConexion{
         auto.setAnio(rs.getInt("anio"));
         auto.setKilometraje(rs.getInt("kilometraje"));
         auto.setModelo(rs.getString("modelo"));
+
+        ClienteImpl daoCli= new ClienteImpl();
+        auto.setCliente(daoCli.getById(rs.getInt("idCliente")));
+        SeguroImpl daoSeg= new SeguroImpl();
+        auto.setSeguro(daoSeg.getById(rs.getInt("idSeguro")));
+       // listaAutos.add(auto);
       }
       rs.close();
       st.close();

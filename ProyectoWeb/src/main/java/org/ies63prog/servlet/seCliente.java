@@ -1,12 +1,12 @@
-package org.ies63.progI.servlets;
+package org.ies63prog.servlet;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.ies63.progI.dao.ClienteImpl;
-import org.ies63.progI.entities.Cliente;
+import org.ies63prog.dao.ClienteImpl;
+import org.ies63prog.entities.Cliente;
 
 import java.io.IOException;
 import java.util.Date;

@@ -5,7 +5,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.ies63prog.dao.AutoImpl;
+import org.ies63prog.dao.ClienteImpl;
 import org.ies63prog.entities.Auto;
+import org.ies63prog.entities.Cliente;
+import org.ies63prog.entities.Marca;
+import org.ies63prog.entities.Seguro;
 
 import java.io.IOException;
 import java.util.Date;
@@ -19,30 +23,51 @@ public class seAuto extends HttpServlet{
         req.setAttribute("Fecha", new Date());
 
         String operacion="nuevo";
-        String patente="Patente";
-        String color="Color";
-        String anio= "Anio";
-        String kilometraje="Kilometraje";
-        Marca marca="Marca";
-        String modelo="Modelo";
-        Cliente cliente="Cliente";
-        Seguro seguro="Seguro";
+        String patente="";
+        String color="";
+        int anio;
+        int kilometraje;
+        Marca marca;
+        String modelo="";
+        Cliente cliente;
+        Seguro seguro;
+        int id = -1;
 
-        patente=req.getParameter("txtPatente");
-        color=req.getParameter("txtColor");
-        anio=req.getParameter("txtAnio");
-        kilometraje=req.getParameter("txtKilometraje")
-        marca=req.getParameter("txtMarca");
-        modelo=req.getParameter("txtModelo");
-        cliente=req.getParameter("txtCliente");
-        id=Integer.parseInt(req.getParameter("textId"));
 
-        Auto autoNuevo = new Auto(id, patente, color, anio, kilometraje, marca, modelo, cliente, seguro);
+
+        operacion = req.getParameter("operacion");
+
+        if (operacion.equals("editar") || operacion.equals("nuevo")) {
+            patente=req.getParameter("txtPatente");
+            color=req.getParameter("txtColor");
+            anio= Integer.parseInt(req.getParameter("txtAnio"));
+            kilometraje=Integer.parseInt(req.getParameter("txtKilometraje"));
+            marca=Marca.valueOf((req.getParameter("txtMarca")));
+            modelo=req.getParameter("txtModelo");
+            cliente=Cliente.valueOf((req.getParameter("txtCliente"));
+            seguro=String.valueOf((req.getParameter("txtSeguro")));
+            id=Integer.parseInt(req.getParameter("textId"));
+        } else
+            id = Integer.parseInt(req.getParameter("id"));
+
         AutoImpl autoDao = new AutoImpl();
-        autoDao.insert(autoNuevo);
 
-        RequestDispatcher rd = req.getRequestDispatcher("/hello.jsp");
-        rd.forward(req,response);
+        if (operacion.equals("nuevo")) {// es nuevo
+            Auto autoNuevo = new Auto(patente,color,anio,kilometraje,marca,modelo,cliente,seguro);
+                autoDao.insert(autoNuevo);
+        }
+        if (operacion.equals("editar")) {// es editar
+            Auto autoEditar = autoDao.getById(id);
+            autoEditar.setPatente(patente);
+            autoDao.update(autoEditar);
+        }
+        if (operacion.equals( "eliminar")) {
+            autoDao.delete(id);
+        }
 
+        RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
+        rd.forward(req, response);
     }
+
+
 }

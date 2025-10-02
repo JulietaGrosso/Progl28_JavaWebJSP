@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="header.jsp" %>
 
+
+
 <jsp:useBean id="cliente" class="org.ies63.progI.entities.Cliente" scope="request" />
 <jsp:useBean id="clienteDao" class="org.ies63.progI.dao.ClienteImpl" scope="page" />
 
